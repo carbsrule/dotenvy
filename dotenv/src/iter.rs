@@ -89,6 +89,7 @@ fn eval_end_state(prev_state: ParseState, buf: &str) -> (usize, ParseState) {
         cur_pos = pos;
         cur_state = match cur_state {
             ParseState::WhiteSpace => match c {
+                c if c.is_whitespace() && c != '\n' && c != '\r' => ParseState::WhiteSpace,
                 '#' => return (cur_pos, ParseState::Comment),
                 '\\' => ParseState::Escape,
                 '"' => ParseState::WeakOpen,
